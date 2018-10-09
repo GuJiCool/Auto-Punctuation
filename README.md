@@ -2,8 +2,8 @@
 Data sets for automatic punctuation engine training and testing 
 
 
-# Draining sets
-
+# Training sets
+Cbeta(XML-p5版)
 
 
 
