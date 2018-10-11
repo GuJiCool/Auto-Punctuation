@@ -1,0 +1,83 @@
+# Preprocess the full Tang text data：
+# Keep only text and punctuation
+# Remove various redundant symbols and labels
+
+import sys
+import os
+import re
+import unicodedata
+from collections import defaultdict, OrderedDict
+from collections import deque
+from bs4 import BeautifulSoup, NavigableString, Tag
+from multiprocessing import Pool
+
+tup = ("，","。",".","？","?","」")
+endpaddtern = tuple(list(u"，、；。：！？「」『』《》〈〉。，？“”；"))
+discard_pattern = re.compile(u'凡例|題解|註解|備釋')
+
+def clean_paragraph(text): #複[QM52]連而埽扌寮
+    if 1. * text.count(u"闕")  / len(text.strip()) > 1./30 or text.count(u"闕") > 10 : return ""
+    text = re.sub(ur"（闕）|（下闕）|（闕一字）|（上闕）|�|（頌缺）", u"❥", text)
+    text = re.sub(ur"\[QM52\]", u"逯", text)
+    text = re.sub(ur"扌寮", u"\U00022E18", text)
+    text = re.sub(ur"氵自", u"洎", text)
+    text = re.sub(ur"（一作.+?）","", text)
+    text = re.sub(ur"（一無.+?）","", text)
+    text = re.sub(ur"（疑作.+?）","", text)
+    text = re.sub(ur"（謹按.+?）","", text) #yao
+    text = re.sub(ur"（謹案.+?）","", text) #yao
+    text = re.sub(ur"（疑一作.+?）","", text) #yao
+    text = re.sub(ur"（其[一二三四五六七八九]）","", text) #yao
+    text = re.sub(ur"(?<=（)原注：","", text)
+    text = re.sub(ur"〈|〉","", text)
+
+    if u"闕" in text:
+        text = re.sub(ur"（闕三字）", u"❥❥❥", text)
+        text = re.sub(ur"（闕二字）", u"❥❥", text)
+        text = re.sub(ur"（闕四字）", u"❥❥❥❥", text)
+        text = re.sub(ur"（闕五字）", u"❥❥❥❥❥", text)
+        text = re.sub(ur"（闕六字）", u"❥❥❥❥❥❥", text)
+        text = re.sub(ur"（闕.+?字）", u"❥❥❥❥❥❥❥❥❥❥", text)
+    return text
+
+def processFile(fileaddr):
+    if os.path.getsize(fileaddr) < 1001: return #文件若太小则跳过
+    if len(fileaddr) == 0 : 
+        return #if no .txt file, skip
+
+    with open(fileaddr) as f:
+        raw_content = f.read()
+        all_p = BeautifulSoup(raw_content, 'lxml').find_all("p")
+        if len(all_p) < 10: return  #至少10个才有内容。。。
+        parsed_contents = [] # well-format lines
+        for i in all_p:
+            ptext = i.get_text()
+            if len(ptext) < 20: 
+                continue
+            else: 
+                parsed_contents.append(clean_paragraph(ptext))
+        saved_addr = fileaddr + ".out"
+        out = open(saved_addr, "w+") 
+        for i in parsed_contents:
+            out.write(i.encode("utf8")+"\n")
+        out.close()
+
+# main field
+if __name__ == '__main__':
+    if len(sys.argv)>1 :
+        path=sys.argv[1]
+    else :
+        print "usage: preprocess.py dirname"
+        sys.exit(1)
+
+	print "building file lists..."
+    filelist = []
+    for dirpath, dirnames, files in os.walk(path):
+    	if "#" in dirpath and "阿含藏" not in dirpath: continue
+        for file in files:
+            if file.endswith('html'):
+                filelist.append(os.path.join(dirpath, file))
+
+    print "file lists built"
+    p = Pool(2)
+    p.map(processFile, filelist)
