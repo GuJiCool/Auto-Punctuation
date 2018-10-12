@@ -7,5 +7,4 @@ The date sets that derived from the published ancient Chinese literature has bee
 
 ## Terms of Use
 The datasets and engine is for free use only for study, not allowed any form of commercial exploitation. To use the engine for batch processing of text, please apply to the office for a free application programming interface (API) and indicate the engine URL in the release. It is not responsible for any damage caused by the use of the engine.
-#### '古籍·酷' API Application:
-https://jinshuju.net/f/HjqYl0 
+#### '古籍·酷' API Application: https://jinshuju.net/f/HjqYl0 
