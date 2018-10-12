@@ -1,5 +1,5 @@
 # The corpus conversation.
-# Converting the preprocessed data to binary Vector data.
+# Converting the preprocessed data to training data.
 
 import sys
 import os
