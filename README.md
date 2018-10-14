@@ -1,8 +1,9 @@
 # Automatic-Punctuation (GJAP)
-'古籍·酷' Automatic Punctuation tool refers to the Artificial Intelligence Punctuation Engine released by the Beijing Longquan Monastery (Fenghuangling, Haidian District) Tripitaka Office on the website (http://gj.cool), excluding the texts processed by the engine. This auto-punctuation tool can automatic marking the modern Chinese punctuation on unpublished ancient Chinese text by machine without human intervention. 
+'古籍·酷' Automatic Punctuation tool refers to the Artificial Intelligence Punctuation Engine released by the Beijing Longquan Monastery (Fenghuangling, Haidian District) Tripitaka Office on the website (http://gj.cool), excluding the texts processed by the engine. This tool automatically punctuating the modern Chinese ancient text by machine without human intervention.
+
 
 ## Datasets for automatic punctuation  
-The date sets that derived from the published ancient Chinese literature has been further proofread and processed. It mainly includes the punctuated CBETA text, Confucian literature, Taoist classics, 24 histories, 13 classics, Tang history and so on. GJAP is an open dataset, which means it will grow over time as data is contributed. Thus in order to enable reproducibility and accurate citation in scientific journals the dataset is versioned. 
+The date sets that derived from the published ancient Chinese literatures has been further proofread and processed. It mainly includes the punctuated CBETA text, Confucian literature, Taoist classics, 24 histories, 13 sutras, Tang history and so on. GJAP is an open dataset, which means it will grow over time as data is contributed. Thus in order to enable reproducibility and accurate citation in scientific journals the dataset is versioned. 
 #### GJAP_Dataset_V1.0：https://pan.baidu.com/s/1xgv5USidOhCxnp2KFu7t5Q  key：2gqk
 
 ## Terms of Use
